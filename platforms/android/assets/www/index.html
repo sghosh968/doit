@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" type="text/css" href="css/jquery.mobile.flatui.css" />
+
+    </head>
+    <body>
+      <div data-role="page">
+
+        <div data-role="panel" id="panel" data-position="right" data-theme="a" data-display="push"></div>
+
+        <div data-role="header">
+          <a data-iconpos="notext" data-role="button" data-icon="home" title="Home">Home</a>
+          <h1>Do It</h1>
+          <a data-iconpos="notext" href="#panel" data-role="button" data-icon="flat-menu"></a>
+        </div>
+
+        <!-- Login page starts here -->
+
+        <div data-role="content" role="main" id='login_page' style='display:none'>
+          <fieldset class="ui-grid-solo">
+            <!--<div class="ui-block-a"><button data-icon="flat-settings" data-theme="b" id='google_login'>Login using google</button></div>-->
+            <div class="ui-field-contain">
+              <label for="fname">First name:</label>
+              <input type="text" name="fname" id="fname">
+              <label for="lname">Last name:</label>
+              <input type="text" name="lname" id="lname">
+              <label for="email">Email:</label>
+              <input type="text" name="email" id="email">
+              <label for="password">Password:</label>
+              <input type="text" name="password" id="password">
+            </div>
+          </fieldset>
+        </div>
+
+        <!-- Login page ends here -->
+
+        <!-- Main menu starts here -->
+
+        <div data-role="content" role="main" id='main_menu' style='display:none'>
+          <input type='button' class='ui-block-a' data-theme="b" data-icon='flat-menu' id='all_tasks_button' value='All Tasks' \>
+          <input type='button' class='ui-block-a' data-theme="b" data-icon='flat-checkround' id='new_task_button' value='New Task' \>
+          <input type='button' class='ui-block-a' data-theme="b" data-icon='arrow-l' id='exit_app_button' value='Exit' \>
+        </div>
+
+        <!-- Main menu ends here -->
+
+        <!-- Add task page starts here -->
+
+          <div data-role="content" role="main" id='add_task_page'>
+            <fieldset class="ui-grid-solo">
+              <div class="ui-field-contain">
+                <label for="fname">Name:</label>
+                <input type="text" name="fname" id="task_name">
+                <label for="lname">Status:</label>
+                <input type="text" name="lname" id="task_status">
+                <label for="email">Complete by:</label>
+                <input type="text" name="email" id="task_complete_by">
+
+                <input type='button' class='ui-block-a' data-theme="b" data-icon='arrow-l' id='add_task_button' value='Add Task' \>
+              </div>
+            </fieldset>
+          </div>
+
+        <!-- Add task page ends here -->
+
+        <!-- Tasks list page starts here -->
+        <div data-role="content" role="main" id='tasks_list'>
+
+          <!-- <table data-role="table" data-mode="columntoggle" class="ui-responsive" id="all_tasks_table" style='display: none;'>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th data-priority="1">Status</th>
+                <th data-priority="2">Complete by</th>
+              </tr>
+            </thead>
+            <tbody id='tasks_table_body'>
+
+            </tbody>
+          </table>
+
+          <p style="color: #F4696A;" id='no_tasks_message' style='display: none;'>
+            No tasks added yet. Come again here after adding a few.
+          </p> -->
+          <input type='button' class='ui-block-a' data-theme="b" data-icon='arrow-l' id='get_tasks_button' value='Get Tasks' \>
+
+        </div>
+        <!-- Tasks list page ends here -->
+
+
+
+      </div>
+
+      <div id="highlight"> </div>
+      <script type="text/javascript" src="cordova.js"></script>
+      <script type="text/javascript" src="js/jquery.min.js"></script>
+      <script type="text/javascript" src="js/jquery.mobile-1.3.1.min.js"></script>
+      <script type="text/javascript" src="js/cordova.oauth2.js"></script>
+      <script type="text/javascript" src="js/index.js"></script>
+      <script type="text/javascript">
+          app.initialize();
+      </script>
+    </body>
+
+</html>
+
+
+<!--failed to create drawable-->
+<!--getGLES1ExtensionString: Could not create GLES 1.x Pbuffer!-->
+<!--Failed to obtain GLES 1.x extensions string!-->
