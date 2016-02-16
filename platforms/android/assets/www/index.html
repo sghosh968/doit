@@ -49,7 +49,7 @@
 
         <!-- Add task page starts here -->
 
-          <div data-role="content" role="main" id='add_task_page'>
+          <div data-role="content" role="main" id='add_task_page' style='display:none'>
             <fieldset class="ui-grid-solo">
               <div class="ui-field-contain">
                 <label for="fname">Name:</label>
@@ -60,11 +60,31 @@
                 <input type="text" name="email" id="task_complete_by">
 
                 <input type='button' class='ui-block-a' data-theme="b" data-icon='arrow-l' id='add_task_button' value='Add Task' \>
+
+
               </div>
             </fieldset>
           </div>
 
         <!-- Add task page ends here -->
+
+
+        <div data-role="content" role="main" id='asd'>
+          <fieldset class="ui-grid-solo">
+            <div class="ui-field-contain">
+              <label for="email">Raw data:</label>
+              <input type="text" name="data_input_to_encrypt" id="data_input_to_encrypt">
+              <label for="email">Encrypted data:</label>
+              <input type="text" name="encrypted_data" id="encrypted_data">
+              <label for="email">Decrypted data:</label>
+              <input type="text" name="decrypted_data" id="decrypted_data">
+              <input type='button' class='ui-block-a' data-theme="b" data-icon='arrow-l' id='encrypt_button' value='Encrypt this!' \>
+              <input type='button' class='ui-block-a' data-theme="b" data-icon='arrow-l' id='decrypt_button' value='Decrypt this!' \>
+
+            </div>
+          </fieldset>
+        </div>
+
 
         <!-- Tasks list page starts here -->
         <div data-role="content" role="main" id='tasks_list'>
@@ -99,6 +119,10 @@
       <script type="text/javascript" src="js/jquery.min.js"></script>
       <script type="text/javascript" src="js/jquery.mobile-1.3.1.min.js"></script>
       <script type="text/javascript" src="js/cordova.oauth2.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/components/core-min.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/components/aes-min.js"></script>
+
       <script type="text/javascript" src="js/index.js"></script>
       <script type="text/javascript">
           app.initialize();

@@ -16,8 +16,9 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+var passPhrase = "b+&};}bT5+xKYx?}"
 var app_views = ['login_page', 'main_menu', 'add_task_page', 'tasks_list']
-var db, new_task, all_tasks;
+var db, new_task, all_tasks, encryptedData, decryptedData;
 var app = {
     // Application Constructor
     initialize: function() {
@@ -63,7 +64,7 @@ var app = {
 
         $('#add_task_button').click(function(){
           if($('#task_name').length && $('#task_status').length && $('#task_complete_by').length){
-            new_task = {name: $('#task_name'), status: $('#task_status'), complete_by: $('#task_complete_by')}
+            new_task = {name: $('#task_name').val(), status: $('#task_status').val(), complete_by: $('#task_complete_by').val()}
             app.add_task(new_task);
           }
           else{
@@ -87,11 +88,43 @@ var app = {
           app.get_tasks_list();
           //app.display_tasks_list();
         });
+
+        $('#encrypt_button').click(function(){
+          if($('#data_input_to_encrypt').val() === "")
+            alert("You must enter some data!");
+          else{
+            alert("Starting encryption !");
+            encryptedData = app.encrypt($('#data_input_to_encrypt').val());
+            alert("Encrypted data is " + encryptedData);
+            $('#encrypted_data').val(encryptedData);
+            encryptedData = null;
+          }
+        });
+
+
+        $('#decrypt_button').click(function(){
+          if($('#encrypted_data').val() === "")
+            alert("You must enter some data!");
+          else{
+            alert("Starting decryption !");
+            var decryptedData = app.decrypt($('#encrypted_data').val());
+            alert("Decrypted data is " + decryptedData);
+            $('#decrypted_data').val(decryptedData);
+            decryptedData = null ;
+          }
+        });
+
+
+
     },
     add_task: function(new_task){
 
-      // console.log("................In function add task...................");
-      // tx.executeSql("INSERT INTO tasks (name, status, complete_by) VALUES (?, ?, ?)", [ new_task.name , new_task.status, new_task.complete_by ]);
+      // alert("................In function add task...................");
+      // alert("Passed in task details: ");
+      // alert("Name: " + new_task.name);
+      // alert("Status: " + new_task.status);
+      // alert("Complete by: " + new_task.complete_by);
+
       db.transaction(function(transaction) {
       var executeQuery = "INSERT INTO tasks (name, status, complete_by) VALUES (?, ?, ?)";
       transaction.executeSql(executeQuery, [ new_task.name , new_task.status, new_task.complete_by ],
@@ -121,11 +154,19 @@ var app = {
         var executeQuery = "SELECT * FROM tasks";
         transaction.executeSql(executeQuery, [],
         function(tx, result) {
-          alert('All tasks retrieved from database');
-          alert("Retrieved data is " + JSON.stringify(result.rows.item));
+          //alert('All tasks retrieved from database');
+          //alert("Retrieved data is " + JSON.stringify(result.rows.item(0).name));
           all_tasks = result
+          for (var i=0; i < result.rows.length; i++){
+              row = result.rows.item(i);
+              name = result.rows.item(i).name
+              alert("row is " + JSON.stringify(row));
+              alert("Name is: " + name);
+          }
           for (i = 0; i < result.rows.length; i++){
-            alert("Id: " + result.rows.item(i).id + " Name: " + JSON.stringify(result.rows.item(i).name) + " status: " + JSON.stringify(result.rows.item(i).status) + " complete_by: " + JSON.stringify(result.rows.item(i).complete_by));
+            console.log("Stored data");
+            console.log(JSON.stringify(result.rows.item(i)));
+            //alert("Id: " + result.rows.item(i).id + " Name: " + JSON.stringify(result.rows.item(i).name) + " status: " + JSON.stringify(result.rows.item(i).status) + " complete_by: " + JSON.stringify(result.rows.item(i).complete_by));
           }
           //display_tasks_list();
         },
@@ -147,6 +188,22 @@ var app = {
       else{
         $('#no_tasks_message').show();
       }
+    },
+
+    encrypt: function(data){
+      if(data != null)
+        return(CryptoJS.AES.encrypt(data, passPhrase));
+      else
+        return(null);
+    },
+
+    decrypt: function(encryptedData){
+      if(encryptedData != null){
+        var temp = CryptoJS.AES.decrypt(encryptedData, passPhrase);
+        return(temp.toString(CryptoJS.enc.Utf8));
+      }
+      else
+        return(null);
     }
 
 };
