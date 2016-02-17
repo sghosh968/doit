@@ -1,0 +1,19 @@
+{
+  "name": "doit",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "precompile-handlebar-templates": "handlebars www/templates/*.handlebars -f www/js/precompiled_templates.js && handlebars www/templates/partials/*.handlebars -p -f www/js/precompiled_partials.js && cat www/js/precompiled_templates.js  www/js/precompiled_partials.js > www/js/precompiled_assets.js && rm www/js/precompiled_templates.js  www/js/precompiled_partials.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sghosh968/doit.git"
+  },
+  "author": "Suman",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sghosh968/doit/issues"
+  },
+  "homepage": "https://github.com/sghosh968/doit#readme"
+}

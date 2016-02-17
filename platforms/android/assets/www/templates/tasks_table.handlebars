@@ -1,0 +1,14 @@
+<table data-role="table" data-mode="columntoggle" class="ui-responsive" id="all_tasks_table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th data-priority="1">Status</th>
+      <th data-priority="2">Complete by</th>
+    </tr>
+  </thead>
+  <tbody id='tasks_table_body'>
+    {{#each this}}
+      {{> task_row this}}
+    {{/each}}
+  </tbody>
+</table>

@@ -19,6 +19,8 @@
 var passPhrase = "b+&};}bT5+xKYx?}"
 var app_views = ['login_page', 'main_menu', 'add_task_page', 'tasks_list']
 var db, new_task, all_tasks, encryptedData, decryptedData;
+var tasks = [{name: "task 1", status: "Incomplete", complete_by: "15/02/2016"}, {name: "task 2", status: "Incomplete", complete_by: "17/02/2016"}, {name: "task 3", status: "Incomplete", complete_by: "25/02/2016"}, {name: "task 4", status: "Incomplete", complete_by: "25/02/2016"}];
+var tasks_form_db = [];
 var app = {
     // Application Constructor
     initialize: function() {
@@ -48,8 +50,15 @@ var app = {
         app.set_app_view("main_menu");
 
         $('#new_task_button').click(function(){
-          alert("new task button clicked");
+          //alert("new task button clicked");
           app.set_app_view("add_task");
+        });
+
+
+        $('#all_tasks_button').click(function(){
+          //alert("all_tasks_button clicked");
+          //all_tasks = app.get_tasks_list();
+          app.set_app_view("task_list");
         });
 
         //console.log("................Initializing deviceInfo variable............");
@@ -77,6 +86,7 @@ var app = {
         app.create_table();
 
         $('#add_task_button').click(function(){
+          alert("Hey, are you trying to add a new task?");
           if($('#task_name').length && $('#task_status').length && $('#task_complete_by').length){
             new_task = {name: $('#task_name').val(), status: $('#task_status').val(), complete_by: $('#task_complete_by').val()}
             app.add_task(new_task);
@@ -170,22 +180,35 @@ var app = {
     },
 
     get_tasks_list: function(){
+      alert("entered get_tasks_list method before db transation");
       db.transaction(function(transaction) {
         var executeQuery = "SELECT * FROM tasks";
         transaction.executeSql(executeQuery, [],
         function(tx, result) {
           //alert('All tasks retrieved from database');
           //alert("Retrieved data is " + JSON.stringify(result.rows.item(0).name));
-          all_tasks = result
+          //all_tasks = result.rows
+          // for (i = 0; i < result.rows.length; i++){
+          //   //console.log("Stored data");
+          //   //console.log(JSON.stringify(result.rows.item(i)));
+          //   //alert("Id: " + result.rows.item(i).id + " Name: " + JSON.stringify(result.rows.item(i).name) + " status: " + JSON.stringify(result.rows.item(i).status) + " complete_by: " + JSON.stringify(result.rows.item(i).complete_by));
+          // }
+          // //display_tasks_list();
+          var temp;
+          temp = []
           for (i = 0; i < result.rows.length; i++){
-            console.log("Stored data");
-            console.log(JSON.stringify(result.rows.item(i)));
-            //alert("Id: " + result.rows.item(i).id + " Name: " + JSON.stringify(result.rows.item(i).name) + " status: " + JSON.stringify(result.rows.item(i).status) + " complete_by: " + JSON.stringify(result.rows.item(i).complete_by));
+            temp.push({id: result.rows.item(i).id, name: result.rows.item(i).name, status: result.rows.item(i).status, complete_by: result.rows.item(i).complete_by});
           }
-          //display_tasks_list();
+          alert(tasks_form_db)
+          alert("In get tasks list function");
+          alert(JSON.stringify(temp));
+          tasks_form_db = temp;
+          alert(tasks_form_db);
+          app.process_all_tasks_after_db_call(tasks_form_db);
         },
         function(error){
           alert('Error retrieving tasks');
+          return(null)
         });
       });
     },
@@ -219,20 +242,46 @@ var app = {
       else
         return(null);
     },
+    process_all_tasks_after_db_call: function(all_tasks) {
+      Handlebars.registerPartial('task_row', Handlebars.partials.task_row);
+          $('#app-view-holder').html(Handlebars.templates.tasks_table(all_tasks));
+          $('#app-view-holder').trigger("create");
+    },
     set_app_view: function(view){
       switch(view) {
         case "main_menu":
-          $('#app-view-holder').html(Handlebars.compile($("#main-menu-template").html()));
+          // $('#app-view-holder').html(Handlebars.compile($("#main-menu-template").html()));
+          $('#app-view-holder').html(Handlebars.templates.main_menu)
           $('#app-view-holder').trigger("create");
           break;
         case "add_task":
-          $('#app-view-holder').html(Handlebars.compile($("#add-task-form-template").html()));
+          // $('#app-view-holder').html(Handlebars.compile($("#add-task-form-template").html()));
+          $('#app-view-holder').html(Handlebars.templates.new_task_form)
           $('#app-view-holder').trigger("create");
+          $('#add_task_button').click(function(){
+            //alert("Hey, are you trying to add a new task?");
+            if($('#task_name').length && $('#task_status').length && $('#task_complete_by').length){
+              new_task = {name: $('#task_name').val(), status: $('#task_status').val(), complete_by: $('#task_complete_by').val()}
+              app.add_task(new_task);
+            }
+            else{
+              alert("You must fill up all the fields to create a task");
+            }
+          });
           break;
         case "task_list":
+        //  Handlebars.registerPartial('task_row', Handlebars.partials.task_row);
+          alert('calling app.get_tasks_list()');
+          app.get_tasks_list();
+          alert("all_tasks inside task_list method");
+          alert(tasks_form_db);
+
+      //    $('#app-view-holder').html(Handlebars.templates.tasks_table(tasks_form_db));
+      //    $('#app-view-holder').trigger("create");
           break;
         default:
-          $('#app-view-holder').html(Handlebars.compile($("#main-menu-template").html()));
+          //$('#app-view-holder').html(Handlebars.compile($("#main-menu-template").html()));
+          $('#app-view-holder').html(Handlebars.templates.main_menu)
           $('#app-view-holder').trigger("create");
       }
     }
