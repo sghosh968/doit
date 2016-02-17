@@ -115,6 +115,12 @@ var app = {
         });
 
 
+        var admobid = {
+            banner: 'ca-app-pub-9597705126104767/5110567335'
+            //interstitial: 'ca-app-pub-xxx/yyy'
+        };
+
+
 
     },
     add_task: function(new_task){

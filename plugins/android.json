@@ -21,7 +21,14 @@
         },
         "cordova-sqlite-storage": {
             "PACKAGE_NAME": "com.suman.doit"
+        },
+        "cordova-plugin-admobpro": {
+            "PACKAGE_NAME": "com.suman.doit"
         }
     },
-    "dependent_plugins": {}
+    "dependent_plugins": {
+        "cordova-plugin-extension": {
+            "PACKAGE_NAME": "com.suman.doit"
+        }
+    }
 }

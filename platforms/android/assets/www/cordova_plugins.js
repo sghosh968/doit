@@ -47,6 +47,14 @@ module.exports = [
         "clobbers": [
             "SQLitePlugin"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-admobpro/www/AdMob.js",
+        "id": "cordova-plugin-admobpro.AdMob",
+        "pluginId": "cordova-plugin-admobpro",
+        "clobbers": [
+            "window.AdMob"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -56,7 +64,9 @@ module.exports.metadata =
     "cordova-plugin-inappbrowser": "1.3.1-dev",
     "cordova-plugin-network-information": "1.2.0",
     "com.vliesaputra.deviceinformation": "1.0.1",
-    "cordova-sqlite-storage": "0.8.2"
+    "cordova-sqlite-storage": "0.8.2",
+    "cordova-plugin-extension": "1.2.9",
+    "cordova-plugin-admobpro": "2.11.1"
 }
 // BOTTOM OF METADATA
 });
